@@ -99,7 +99,7 @@
         <Error Condition="'$(SPTPath)' == ''" Text="Missing SPT path" />
     </Target>
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(InstallBepInExPlugin)' == 'True'">
         <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SPTPath)\BepInEx\plugins\$(TargetFileName)&quot;" />
     </Target>
 </Project>
