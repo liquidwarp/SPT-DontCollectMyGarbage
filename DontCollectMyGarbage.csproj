@@ -4,6 +4,8 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <Authors>Liquidwarp</Authors>
+        <BepInExPluginGuidPrefix>net.liquidwarp</BepInExPluginGuidPrefix>
+        <Product>$(MSBuildProjectName)</Product>
         <RootNamespace>$(Authors).$(MSBuildProjectName)</RootNamespace>
         <AssemblyName>$(Authors)-$(MSBuildProjectName)</AssemblyName>
         <AssemblyVersion>2.0.0</AssemblyVersion>
@@ -11,6 +13,7 @@
         <Configurations>Debug;Release;Package</Configurations>
         <Version>$(AssemblyVersion)</Version>
         <LangVersion>latest</LangVersion>
+        <BepInExPluginGuid>$(BepInExPluginGuidPrefix).$(MSBuildProjectName.ToLowerInvariant())</BepInExPluginGuid>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,6 +33,10 @@
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" PrivateAssets="all" />
+    </ItemGroup>
 
     <ItemGroup>
         <Reference Include="PhysicsModule">
