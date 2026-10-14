@@ -3,8 +3,9 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <RootNamespace>DontCollectMyGarbage</RootNamespace>
         <Authors>Liquidwarp</Authors>
+        <RootNamespace>$(Authors).$(MSBuildProjectName)</RootNamespace>
+        <AssemblyName>$(Authors)-$(MSBuildProjectName)</AssemblyName>
         <AssemblyVersion>2.0.0</AssemblyVersion>
         <FileVersion>$(AssemblyVersion)</FileVersion>
         <Configurations>Debug;Release;Package</Configurations>
@@ -101,5 +102,14 @@
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(InstallBepInExPlugin)' == 'True'">
         <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SPTPath)\BepInEx\plugins\$(TargetFileName)&quot;" />
+    </Target>
+
+    <Target Name="PackageRelease" AfterTargets="Build" Condition="'$(PackageRelease)' == 'True'">
+        <PropertyGroup>
+            <ReleaseDir>$(MSBuildProjectDirectory)\releases\$(AssemblyName)-$(Version)</ReleaseDir>
+        </PropertyGroup>
+        <RemoveDir Directories="$(ReleaseDir)" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseDir)\BepInEx\plugins" />
+        <ZipDirectory SourceDirectory="$(ReleaseDir)" DestinationFile="$(ReleaseDir).zip" Overwrite="true" />
     </Target>
 </Project>
