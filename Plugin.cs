@@ -16,17 +16,16 @@ public class Plugin : BaseUnityPlugin
     {
         LogSource = Logger;
 
-        // Not that I expect another mod to subclass `MemoryCollectionPatch`, but we still
-        // ensure we disable one and only one `MemoryCollectionPatch` in the `SPT.Custom.Patches` namespace.
-        var patch = ModPatchCache.GetActivePatches()
-            .SingleOrDefault(p => p.GetType() == typeof(MemoryCollectionPatch));
-        if (patch == null)
+        if (ModPatchCache.GetActivePatches()
+                .FirstOrDefault(p => p.GetType() == typeof(MemoryCollectionPatch))
+            is MemoryCollectionPatch patch)
+        {
+            patch.Disable();
+            LogSource.LogInfo($"Disabled {typeof(MemoryCollectionPatch).FullName}");
+        }
+        else
         {
             LogSource.LogWarning($"{typeof(MemoryCollectionPatch).FullName} is not active, nothing to disable");
-            return;
         }
-
-        patch.Disable();
-        LogSource.LogInfo($"Disabled {typeof(MemoryCollectionPatch).FullName}");
     }
 }
