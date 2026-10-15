@@ -7,7 +7,7 @@ using SPT.Reflection.Patching;
 namespace Liquidwarp.DontCollectMyGarbage;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-[BepInDependency("com.SPT.custom", "4.1.6")]
+[BepInDependency("com.SPT.custom", MyPluginInfo.CLIENT_SPT_VERSION)]
 public class Plugin : BaseUnityPlugin
 {
     public static ManualLogSource LogSource;
