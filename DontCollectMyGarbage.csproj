@@ -8,30 +8,15 @@
         <Product>$(MSBuildProjectName)</Product>
         <RootNamespace>$(Authors).$(MSBuildProjectName)</RootNamespace>
         <AssemblyName>$(Authors)-$(MSBuildProjectName)</AssemblyName>
-        <AssemblyVersion>2.0.0</AssemblyVersion>
-        <FileVersion>$(AssemblyVersion)</FileVersion>
-        <Configurations>Debug;Release;Package</Configurations>
-        <Version>$(AssemblyVersion)</Version>
+        <Version>2.0.0</Version>
         <LangVersion>latest</LangVersion>
         <BepInExPluginGuid>$(BepInExPluginGuidPrefix).$(MSBuildProjectName.ToLowerInvariant())</BepInExPluginGuid>
+        <ClientPluginDir>BepInEx\plugins</ClientPluginDir>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>None</DebugType>
+        <GenerateDependencyFile>false</GenerateDependencyFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -111,7 +96,7 @@
     </Target>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(InstallBepInExPlugin)' == 'True'">
-        <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SPTPath)\BepInEx\plugins\$(TargetFileName)&quot;" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SPTPath)\$(ClientPluginDir)" />
     </Target>
 
     <Target Name="PackageRelease" AfterTargets="Build" Condition="'$(PackageRelease)' == 'True'">
@@ -119,7 +104,7 @@
             <ReleaseDir>$(MSBuildProjectDirectory)\releases\$(AssemblyName)-$(Version)</ReleaseDir>
         </PropertyGroup>
         <RemoveDir Directories="$(ReleaseDir)" />
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseDir)\BepInEx\plugins" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseDir)\$(ClientPluginDir)" />
         <ZipDirectory SourceDirectory="$(ReleaseDir)" DestinationFile="$(ReleaseDir).zip" Overwrite="true" />
     </Target>
 </Project>
