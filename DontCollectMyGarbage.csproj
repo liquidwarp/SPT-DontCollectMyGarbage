@@ -1,53 +1,20 @@
-<!-- From: https://github.com/Jehree/SPTClientModExamples/blob/main/SPTClientModExamples.csproj -->
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Authors>Liquidwarp</Authors>
-        <BepInExPluginGuidPrefix>net.liquidwarp</BepInExPluginGuidPrefix>
-        <Product>$(MSBuildProjectName)</Product>
-        <RootNamespace>$(Authors).$(MSBuildProjectName)</RootNamespace>
-        <AssemblyName>$(Authors)-$(MSBuildProjectName)</AssemblyName>
-        <Version>2.0.0</Version>
-        <ClientSPTVersion>4.1.6</ClientSPTVersion>
         <LangVersion>latest</LangVersion>
-        <BepInExPluginGuid>$(BepInExPluginGuidPrefix).$(MSBuildProjectName.ToLowerInvariant())</BepInExPluginGuid>
-        <ClientPluginDir>BepInEx\plugins</ClientPluginDir>
+        <ModDir>BepInEx\plugins</ModDir>
     </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <DebugType>None</DebugType>
-        <GenerateDependencyFile>false</GenerateDependencyFile>
-    </PropertyGroup>
-
-    <Target Name="GenerateMyPluginInfo" BeforeTargets="CoreCompile">
-        <PropertyGroup>
-            <MyPluginInfoFile>$(IntermediateOutputPath)MyPluginInfo.g.cs</MyPluginInfoFile>
-            <MyPluginInfoText><![CDATA[
-namespace $(RootNamespace)%3B
-
-internal static class MyPluginInfo
-{
-    public const string PLUGIN_GUID = "$(BepInExPluginGuid)"%3B
-    public const string PLUGIN_NAME = "$(Product)"%3B
-    public const string PLUGIN_VERSION = "$(Version)"%3B
-    public const string CLIENT_SPT_VERSION = "$(ClientSPTVersion)"%3B
-}
-]]></MyPluginInfoText>
-        </PropertyGroup>
-        <WriteLinesToFile File="$(MyPluginInfoFile)" Lines="$(MyPluginInfoText)" Overwrite="true" WriteOnlyWhenDifferent="true" />
-        <ItemGroup>
-            <Compile Include="$(MyPluginInfoFile)" />
-            <FileWrites Include="$(MyPluginInfoFile)" />
-        </ItemGroup>
-    </Target>
 
     <ItemGroup>
-        <Reference Include="PhysicsModule">
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-        </Reference>
         <Reference Include="0Harmony">
             <HintPath>$(SPTPath)\BepInEx\core\0Harmony.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="BepInEx">
+            <HintPath>$(SPTPath)\BepInEx\core\BepInEx.dll</HintPath>
         </Reference>
         <Reference Include="spt-common">
             <HintPath>$(SPTPath)\BepInEx\plugins\spt\spt-common.dll</HintPath>
@@ -58,72 +25,15 @@ internal static class MyPluginInfo
         <Reference Include="spt-reflection">
             <HintPath>$(SPTPath)\BepInEx\plugins\spt\spt-reflection.dll</HintPath>
         </Reference>
-        <Reference Include="Assembly-CSharp">
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="BepInEx">
-            <HintPath>$(SPTPath)\BepInEx\core\BepInEx.dll</HintPath>
-        </Reference>
-        <Reference Include="Comfort">
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\Comfort.dll</HintPath>
-        </Reference>
-        <Reference Include="Comfort.Unity, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\Comfort.Unity.dll</HintPath>
-        </Reference>
-        <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="Sirenix.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\Sirenix.Serialization.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-        </Reference>
         <Reference Include="UnityEngine">
             <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.dll</HintPath>
         </Reference>
-        <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
-        </Reference>
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.InputLegacyModule">
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.UI.dll</HintPath>
         </Reference>
     </ItemGroup>
 
     <Target Name="RequireSPTPath" BeforeTargets="ResolveAssemblyReferences">
         <Error Condition="'$(SPTPath)' == ''" Text="Missing SPT path" />
-    </Target>
-
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(InstallBepInExPlugin)' == 'True'">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SPTPath)\$(ClientPluginDir)" />
-    </Target>
-
-    <Target Name="PackageRelease" AfterTargets="Build" Condition="'$(PackageRelease)' == 'True'">
-        <PropertyGroup>
-            <ReleaseDir>$(MSBuildProjectDirectory)\releases\$(AssemblyName)-$(Version)</ReleaseDir>
-        </PropertyGroup>
-        <RemoveDir Directories="$(ReleaseDir)" />
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseDir)\$(ClientPluginDir)" />
-        <ZipDirectory SourceDirectory="$(ReleaseDir)" DestinationFile="$(ReleaseDir).zip" Overwrite="true" />
     </Target>
 </Project>
